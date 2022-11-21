@@ -1,6 +1,5 @@
 ## Project structure
-<details>
-<summary><b>Project directory tree</b></summary>
+<b>Project directory tree</b>
 ```
 .
 ├── app                                     # root directory of Python package
@@ -41,7 +40,7 @@
 ├── activate_env.sh                         # activate Python environment (add python executable to PATGH, build editable Python Project, install requirements)
 └── requirements.txt                        # project dependencies (external packages)
 ```
-</details>
+
 
 ### Example of layered architecture:
 
