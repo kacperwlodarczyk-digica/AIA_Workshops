@@ -6,8 +6,8 @@ import json
 import tensorflow as tf
 from tensorflow_addons.metrics import F1Score
 
-from api.src.core.schemas.predictions import Prediction
-from api.src.core.common.exceptions import ModelUninitializedException
+from aia_api.src.core.schemas.predictions import Prediction
+from aia_api.src.core.common.exceptions import ModelUninitializedException
 
 
 class ClassifierModel:

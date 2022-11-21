@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from api.src.core.schemas.predictions import Prediction
-from api.src.core.ml_models.classifier import ClassifierModel
+from aia_api.src.core.schemas.predictions import Prediction
+from aia_api.src.core.ml_models.classifier import ClassifierModel
 
 
 class PredictionService:

@@ -1,9 +1,9 @@
 from dependency_injector.wiring import Provide, inject
 from fastapi import Depends, APIRouter, File, UploadFile
 
-from api.src.core.app_container import AppContainer
-from api.src.core.services.predictions import PredictionService
-from api.src.core.schemas.predictions import Prediction
+from aia_api.src.core.app_container import AppContainer
+from aia_api.src.core.services.predictions import PredictionService
+from aia_api.src.core.schemas.predictions import Prediction
 
 router = APIRouter()
 

@@ -1,7 +1,7 @@
 from starlette.responses import RedirectResponse
 
-from api.src.core.server import get_application
-from api.src.core.settings import load_settings
+from aia_api.src.core.server import get_application
+from aia_api.src.core.settings import load_settings
 
 #  Load application settings
 settings = load_settings()

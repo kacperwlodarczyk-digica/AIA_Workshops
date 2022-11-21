@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from api.src.v1.endpoints import healthcheck
+from aia_api.src.v1.endpoints import healthcheck
 
-from api.src.v1.endpoints import predictions
+from aia_api.src.v1.endpoints import predictions
 
 api_router = APIRouter()
 

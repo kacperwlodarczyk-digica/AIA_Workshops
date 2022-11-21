@@ -17,8 +17,8 @@ if [ ! -e .venv/bin/activate ]; then
     pip $PIP_VERBOSITY install --upgrade pip wheel setuptools
 
     # Install pre-commit
-    python -m pip install pre-commit
-    pre-commit install
+    # python -m pip install pre-commit
+    # pre-commit install
 
     # Install editable package of AI Academy app
     python -m pip install -e app

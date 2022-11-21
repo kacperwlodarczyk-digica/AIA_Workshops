@@ -1,9 +1,9 @@
 from dependency_injector import containers
 from dependency_injector.providers import Singleton
 
-from api.src.core.services.predictions import PredictionService
-from api.src.core.ml_models.classifier import ClassifierModel
-from api.src.core.settings import load_settings
+from aia_api.src.core.services.predictions import PredictionService
+from aia_api.src.core.ml_models.classifier import ClassifierModel
+from aia_api.src.core.settings import load_settings
 
 
 class AppContainer(containers.DeclarativeContainer):
