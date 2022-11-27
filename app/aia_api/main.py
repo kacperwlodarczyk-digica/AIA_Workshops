@@ -9,7 +9,7 @@ settings = load_settings()
 # Get FastAPI application
 app = get_application(
     project_name=settings.PROJECT_NAME,
-    api_prefix=settings.API_PREFIX,
+    api_prefix=settings.API_VERSION_PREFIX,
     cors_allowed_origins=settings.CORS_ALLOWED_ORIGINS,
 )
 

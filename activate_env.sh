@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check if file was sourced innstead of executed
+# Check if file was sourced
 [[ $_ != $0 ]] || echo -e "\n\e[5m\e[91mTHIS SCRIPT SHOULD BE SOURCED RATHER THAN EXECUTED!\e[0m\n"
 
 PYTHON_VERSION=python3.9
@@ -32,3 +32,4 @@ fi
 
 # Install requirements
 pip $PIP_VERBOSITY install -r requirements.txt
+python -m mypy_boto3

@@ -1,6 +1,11 @@
-from pydantic import BaseModel
+from __future__ import annotations
+
+from pydantic import BaseModel, confloat
+
+
+SCORE_TYPE = confloat(ge=0, le=1)
 
 
 class Prediction(BaseModel):
     label: str
-    score: float
+    score: SCORE_TYPE
