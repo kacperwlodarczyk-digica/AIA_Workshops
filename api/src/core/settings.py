@@ -23,7 +23,7 @@ class AppSettings(BaseSettings):
     class Config:
         # More https://pydantic-docs.helpmanual.io/usage/settings/
         case_sensitive = True
-        env_file = "env"
+        env_file = ".env"
 
 
 @lru_cache
