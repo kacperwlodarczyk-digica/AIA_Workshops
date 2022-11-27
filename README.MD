@@ -2,43 +2,40 @@
 <b>Project directory tree</b>
 ```
 .
-├── app                                     # root directory of Python package
-│   ├── api                                 # root directory of REST API (Backend) package
-│   │   ├── __init__.py
-│   │   ├── main.py                         # entry point of the Backend APP
-│   │   ├── run_app.sh                      # script for running the App with default configuration
-│   │   └── src                            
-│   │       ├── core                        # core part of the API, with all the schemas and logic
-│   │       │   ├── app_container.py        # container that stores all the resources that are then injected to api.v1.endpoints package
-│   │       │   ├── common                  # common/shared code
-│   │       │   │   ├── exceptions.py       # internal(!TODO! check if not changed) exceptions
-│   │       │   │   └── __init__.py
-│   │       │   ├── __init__.py
-│   │       │   ├── ml_models
-│   │       │   │   ├── classifier.py       # service for keras model (business logic)
-│   │       │   │   └── __init__.py
-│   │       │   ├── schemas                 # endpoints/internall schemas (written most often in Pydantic)
-│   │       │   │   ├── __init__.py
-│   │       │   │   └── predictions.py
-│   │       │   ├── server.py               # server factory
-│   │       │   ├── services                # business logic
-│   │       │   │   ├── __init__.py
-│   │       │   │   └── predictions.py      
-│   │       │   └── settings.py             # app settings for configuring it during startup (Pydantic)
-│   │       ├── __init__.py
-│   │       └── v1                          # version v1 of the API router
-│   │           ├── endpoints               # endpoints/routers (each file contains separate router object)
-│   │           │   ├── healthcheck.py      # /healthcheck endpoint
-│   │           │   ├── __init__.py
-│   │           │   └── predictions.py      # /predictions endpoint
-│   │           ├── __init__.py
-│   │           └── router.py               # main router (contains all the lower-level routers from the endpoints directory)
-│   └── setup.py                            # setup file for building Python package
-├── data
-│   ├── class_names.json
-│   └── model_k_kren_final.h5               # data directory, with model and class names mapping dict
-├── activate_env.sh                         # activate Python environment (add python executable to PATGH, build editable Python Project, install requirements)
-└── requirements.txt                        # project dependencies (external packages)
+├── api                             # root directory of REST API (Backend) package
+│   ├── __init__.py
+│   ├── main.py                     # entry point of the Backend APP
+│   ├── run_app.sh                  # script for running the App with default configuration
+│   └── src                            
+│       ├── core                    # core part of the API, with all the schemas and logic
+│       │   ├── app_container.py    # container that stores all the resources that are then injected to api.v1.endpoints package
+│       │   ├── common              # common/shared code
+│       │   │   ├── exceptions.py   # internal(!TODO! check if not changed) exceptions
+│       │   │   └── __init__.py
+│       │   ├── __init__.py
+│       │   ├── ml_models
+│       │   │   ├── classifier.py   # service for keras model (business logic)
+│       │   │   └── __init__.py
+│       │   ├── schemas             # endpoints/internall schemas (written most often in Pydantic)
+│       │   │   ├── __init__.py
+│       │   │   └── predictions.py
+│       │   ├── server.py           # server factory
+│       │   ├── services            # business logic
+│       │   │   ├── __init__.py
+│       │   │   └── predictions.py      
+│       │   └── settings.py         # app settings for configuring it during startup (Pydantic)
+│       ├── __init__.py
+│       └── v1                      # version v1 of the API router
+│           ├── endpoints           # endpoints/routers (each file contains separate router object)
+│           │   ├── healthcheck.py  # /healthcheck endpoint
+│           │   ├── __init__.py
+│           │   └── predictions.py  # /predictions endpoint
+│           ├── __init__.py
+│           └── router.py           # main router (contains all the lower-level routers from the endpoints directory)
+├── setup.py                        # setup file for building Python package
+├── class_names.json
+├── activate_env.sh                 # activate env (add python executable to PATH, build editable Project, install reqs)
+└── requirements.txt                # project dependencies (external packages)
 ```
 
 
@@ -61,15 +58,3 @@ You may want to use this as a template. You can easily extend this app with:
 - [Dependency injector for Python](https://python-dependency-injector.ets-labs.org/introduction/index.html) - framework implementing dependency injection principle
 - [Pydantic](https://pydantic-docs.helpmanual.io/) - data validation, settings management, type annotations
 - [Keras](https://keras.io/) - simple, high-level API for Tensorflow Deep Learning library
-
-
-
-
-
-
-<!-- Notatki -->
-
-TLJH default jupyter-lab:
-```
-sudo tljh-config set user_environment.default_app jupyterlab
-```

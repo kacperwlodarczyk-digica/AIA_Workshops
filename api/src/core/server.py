@@ -3,8 +3,8 @@ from typing import Sequence
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from aia_api.src.v1.router import api_router
-from aia_api.src.core.app_container import AppContainer
+from api.src.v1.router import api_router
+from api.src.core.app_container import AppContainer
 
 
 def get_application(project_name: str, api_prefix: str, cors_allowed_origins: Sequence[str]) -> FastAPI:

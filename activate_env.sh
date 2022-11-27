@@ -21,7 +21,7 @@ if [ ! -e .venv/bin/activate ]; then
     # pre-commit install
 
     # Install editable package of AI Academy app
-    python -m pip install -e app
+    python -m pip install -e .
 else
     # Source venv if exists
     source .venv/bin/activate

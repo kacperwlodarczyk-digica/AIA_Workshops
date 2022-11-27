@@ -1,5 +1,5 @@
-from aia_api.src.core.models.classifier import ClassifierModel
-from aia_api.src.core.managers.s3_downloader import S3Downloader
+from api.src.core.ml.classifier_model import ClassifierModel
+from api.src.core.managers.s3_downloader import S3Downloader
 
 
 class PredictionsService:
@@ -22,7 +22,7 @@ class PredictionsService:
     def _download_model_files(self):
         if not self._check_model_files_exists():
             self._model.files.root_dir_path.mkdir(parents=True, exist_ok=True)
-            self._s3_downloader.download_directory(self._model_s3_location, self._model.files.root_dir_path)
+            self._s3_downloader.download_directory_content(self._model_s3_location, self._model.files.root_dir_path)
 
     def _check_model_files_exists(self) -> bool:
         return self._model.files.class_names_file_path.exists() and self._model.files.model_file_path.exists()

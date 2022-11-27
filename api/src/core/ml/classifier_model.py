@@ -1,11 +1,10 @@
-import gc
 from typing import Optional
 import json
 
 import tensorflow as tf
 
-from aia_api.src.core.schemas.predictions import Prediction
-from aia_api.src.core.models.files import ClassifierModelFiles
+from api.src.core.schemas.predictions import Prediction
+from api.src.core.ml.classifier_files import ClassifierModelFiles
 
 
 class ClassifierModel:
@@ -44,12 +43,12 @@ class ClassifierModel:
         return Prediction(label=label, score=score)
 
     def load(self):
-        if not self.ready:
-            self._classifier_model = tf.keras.models.load_model(self.files.model_file_path, compile=False)
-            self._classifier_model.trainable = False
-            self._input_shape = self._classifier_model.layers[0].input_shape
-            with open(self.files.class_names_file_path, "r") as f:
-                self._indexes_to_labels = json.load(f)
+        # if not self.ready:
+        self._classifier_model = tf.keras.models.load_model(self.files.model_file_path, compile=False)
+        self._classifier_model.trainable = False
+        self._input_shape = self._classifier_model.layers[0].input_shape
+        with open(self.files.class_names_file_path, "r") as f:
+            self._indexes_to_labels = json.load(f)
 
     @property
     def ready(self):

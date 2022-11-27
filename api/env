@@ -1,0 +1,5 @@
+REGION=us-east-2
+BUCKET_NAME=aia_workshops_bucket
+MODEL_DATA_LOCATION_S3=model
+MODEL_FILE_NAME=model.hdf5
+CLASS_NAMES_FILE_NAME=class_names.json
