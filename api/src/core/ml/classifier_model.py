@@ -1,11 +1,11 @@
-import gc
 from typing import Optional
 import json
 
 import tensorflow as tf
 
-from aia_api.src.core.schemas.predictions import Prediction
-from aia_api.src.core.models.files import ClassifierModelFiles
+from api.src.core.schemas.predictions import Prediction
+from api.src.core.ml.classifier_files import ClassifierModelFiles
+from api.src.core.api_exceptions import ModelNotLoadedException
 
 
 class ClassifierModel:
@@ -32,7 +32,7 @@ class ClassifierModel:
 
     def predict(self, image: tf.Tensor):
         if not self.ready:
-            raise RuntimeError("Model not loaded!")
+            raise ModelNotLoadedException
         output: tf.Tensor = self._classifier_model(image, training=False)
         return output
 

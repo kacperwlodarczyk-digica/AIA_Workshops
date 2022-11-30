@@ -1,16 +1,16 @@
 from dependency_injector.wiring import Provide, inject
 from fastapi import Depends, APIRouter, File, UploadFile
 
-from aia_api.src.core.app_container import AppContainer
-from aia_api.src.core.services.predictions import PredictionsService
-from aia_api.src.core.schemas.predictions import Prediction
+from api.src.core.app_container import AppContainer
+from api.src.core.services.predictions_service import PredictionsService
+from api.src.core.schemas.predictions import Prediction
 
 router = APIRouter()
 
 
 @router.post("/", response_model=Prediction)
 @inject
-async def classify_image(
+async def predict(
     image_file: UploadFile = File(), service: PredictionsService = Depends(Provide[AppContainer.prediction_service])
 ) -> list[Prediction]:
     image_content = await image_file.read()

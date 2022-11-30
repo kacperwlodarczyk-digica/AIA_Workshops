@@ -1,11 +1,13 @@
+import boto3
+from botocore.config import Config
 from dependency_injector import containers
-from dependency_injector.providers import Singleton
+from dependency_injector.providers import Singleton, Resource
 
-from aia_api.src.core.services.predictions import PredictionsService
-from aia_api.src.core.managers.s3_downloader import S3Downloader
-from aia_api.src.core.models.classifier import ClassifierModel
-from aia_api.src.core.models.files import ClassifierModelFiles
-from aia_api.src.core.settings import load_settings
+from api.src.core.services.predictions_service import PredictionsService
+from api.src.core.managers.s3_downloader import S3Downloader
+from api.src.core.ml.classifier_model import ClassifierModel
+from api.src.core.ml.classifier_files import ClassifierModelFiles
+from api.src.core.settings import load_settings
 
 
 class AppContainer(containers.DeclarativeContainer):
@@ -14,20 +16,22 @@ class AppContainer(containers.DeclarativeContainer):
     # WiringConfiguration provides a way to inject container providers into the functions and methods
     # As we're using providers in endpoints package (via FastAPI Depends()), we need to add this package to the configuration
     # Then, we can inject our providers to the endpoints (using @inject decorator)
-    wiring_config = containers.WiringConfiguration(packages=["aia_api.src.v1.endpoints"])
+    wiring_config = containers.WiringConfiguration(packages=["api.src.v1.endpoints"])
 
     settings = load_settings()
 
     # AWS
+    session = Resource(boto3.session.Session, region_name=settings.REGION)
     s3_downloader = Singleton(
         S3Downloader,
+        s3_resource=session.provided.resource.call(service_name="s3", config=Config(signature_version="s3v4")),
         bucket_name=settings.BUCKET_NAME,
     )
 
     # Models
     classifier_files: Singleton[ClassifierModelFiles] = Singleton(
         ClassifierModelFiles,
-        root_dir_path=settings.MODEL_DATA_LOCAL_DIR,
+        root_dir_path=settings.DATA_LOCAL_DIR,
         model_file_name=settings.MODEL_FILE_NAME,
         class_names_file_name=settings.CLASS_NAMES_FILE_NAME,
     )
