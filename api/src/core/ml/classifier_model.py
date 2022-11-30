@@ -5,6 +5,7 @@ import tensorflow as tf
 
 from api.src.core.schemas.predictions import Prediction
 from api.src.core.ml.classifier_files import ClassifierModelFiles
+from api.src.core.api_exceptions import ModelNotLoadedException
 
 
 class ClassifierModel:
@@ -31,7 +32,7 @@ class ClassifierModel:
 
     def predict(self, image: tf.Tensor):
         if not self.ready:
-            raise RuntimeError("Model not loaded!")
+            raise ModelNotLoadedException
         output: tf.Tensor = self._classifier_model(image, training=False)
         return output
 
@@ -43,12 +44,12 @@ class ClassifierModel:
         return Prediction(label=label, score=score)
 
     def load(self):
-        # if not self.ready:
-        self._classifier_model = tf.keras.models.load_model(self.files.model_file_path, compile=False)
-        self._classifier_model.trainable = False
-        self._input_shape = self._classifier_model.layers[0].input_shape
-        with open(self.files.class_names_file_path, "r") as f:
-            self._indexes_to_labels = json.load(f)
+        if not self.ready:
+            self._classifier_model = tf.keras.models.load_model(self.files.model_file_path, compile=False)
+            self._classifier_model.trainable = False
+            self._input_shape = self._classifier_model.layers[0].input_shape
+            with open(self.files.class_names_file_path, "r") as f:
+                self._indexes_to_labels = json.load(f)
 
     @property
     def ready(self):

@@ -1,5 +1,6 @@
 from api.src.core.ml.classifier_model import ClassifierModel
 from api.src.core.managers.s3_downloader import S3Downloader
+from api.src.core.api_exceptions import ModelFilesNotFoundException
 
 
 class PredictionsService:
@@ -14,9 +15,7 @@ class PredictionsService:
     def setup_model(self):
         self._download_model_files()
         if not self._check_model_files_exists():
-            raise FileNotFoundError(
-                f"Model files under `{self._model.files.root_dir_path}` directory does not exists!"
-            )
+            raise ModelFilesNotFoundException
         self._model.load()
 
     def _download_model_files(self):
