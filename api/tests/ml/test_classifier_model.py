@@ -15,13 +15,13 @@ def test_load_method(classifier_model: ClassifierModel):
 
 def test_preprocess_method(classifier_model: ClassifierModel, assets_path: Path):
     classifier_model.load()
-    with open(assets_path / HEALTHLY_IMAGE_NAME, mode="rb") as f:
+    with open(assets_path / HEALTHY_IMAGE_NAME, mode="rb") as f:
         image_content = f.read()
     image_tf = classifier_model.preprocess(image_content)
     assert isinstance(image_tf, tf.Tensor)
 
     image_np = image_tf.numpy()
-    expected_image_preprocessed_np = np.load(assets_path / _HEALTHLY_IMAGE_PREPROCESSED_NAME)
+    expected_image_preprocessed_np = np.load(assets_path / _HEALTHY_IMAGE_PREPROCESSED_NAME)
 
     assert image_np.shape == expected_image_preprocessed_np.shape
     assert np.allclose(image_np, expected_image_preprocessed_np, atol=0.005)
@@ -29,7 +29,7 @@ def test_preprocess_method(classifier_model: ClassifierModel, assets_path: Path)
 
 def test_predict_method(classifier_model: ClassifierModel, assets_path: Path):
     classifier_model.load()
-    image_preprocessed_np = np.load(assets_path / _HEALTHLY_IMAGE_PREPROCESSED_NAME)
+    image_preprocessed_np = np.load(assets_path / _HEALTHY_IMAGE_PREPROCESSED_NAME)
     image_preprocessed_tf: tf.Tensor = tf.convert_to_tensor(image_preprocessed_np)
     output = classifier_model.predict(image_preprocessed_tf)
 
@@ -47,7 +47,7 @@ def test_map_index_to_label(classifier_model: ClassifierModel):
 
 def test_postprocess_method(classifier_model: ClassifierModel, assets_path: Path):
     classifier_model.load()
-    image_preprocessed_np = np.load(assets_path / _HEALTHLY_IMAGE_PREPROCESSED_NAME)
+    image_preprocessed_np = np.load(assets_path / _HEALTHY_IMAGE_PREPROCESSED_NAME)
     image_preprocessed_tf: tf.Tensor = tf.convert_to_tensor(image_preprocessed_np)
     output = classifier_model.predict(image_preprocessed_tf)
     prediction = classifier_model.postprocess(image_preprocessed_tf, output)
@@ -55,5 +55,5 @@ def test_postprocess_method(classifier_model: ClassifierModel, assets_path: Path
     assert prediction.label.lower() == "healthy"
 
 
-HEALTHLY_IMAGE_NAME = "healthy.jpg"
-_HEALTHLY_IMAGE_PREPROCESSED_NAME = "healthy_preprocessed.npy"
+HEALTHY_IMAGE_NAME = "healthy.jpg"
+_HEALTHY_IMAGE_PREPROCESSED_NAME = "healthy_preprocessed.npy"

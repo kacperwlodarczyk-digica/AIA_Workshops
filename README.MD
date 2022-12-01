@@ -1,8 +1,22 @@
+## Run API
+```
+~/AIA_Workshops$ . ./activate_env.sh
+~/AIA_Workshops$ cd ./api
+~/AIA_Workshops$ ./start_api.sh
+```
+
+## Run all tests
+```
+~/AIA_Workshops$ . ./activate_env.sh
+~/AIA_Workshops$ cd ./api
+~/AIA_Workshops$ ./run_tests.sh
+```
+
 ## Project structure
 <b>Project directory tree</b>
 ```
 .
-├── .env                                 # ENV file with configuration variables
+├── .env                                # ENV file with configuration variables
 ├── __init__.py
 ├── pytest.ini                          # Tests configuration file
 ├── run_app.sh                          # Script for running API
@@ -64,6 +78,7 @@
 - Third layer: `api.src.core.ml.classifier_model`
 
 Code is splitted and each layer is characterised by different level of abstraction, where first layer is the most abstract (check the logic for the file representing this layer in the example), and the last layer (example of classifier model) actually contains keras model and manage it (load/unload/make a prediction/pre&post-process data) - of course we're using DL library, but this is just another level that we're not aware of, apart from the interface that it provides.
+Services are orchestrating lower-level classes by handling data from API requests and calling those lower-level classes to do the actual work. 
 
 ### Extending this project
 You may want to use this as a template. You can easily extend this app with:
