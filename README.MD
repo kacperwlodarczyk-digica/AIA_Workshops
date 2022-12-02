@@ -2,14 +2,7 @@
 ```
 ~/AIA_Workshops$ . ./activate_env.sh
 ~/AIA_Workshops$ cd ./api
-~/AIA_Workshops$ ./start_api.sh
-```
-
-## Run all tests
-```
-~/AIA_Workshops$ . ./activate_env.sh
-~/AIA_Workshops$ cd ./api
-~/AIA_Workshops$ ./run_tests.sh
+~/AIA_Workshops/api$ ./start_api.sh
 ```
 
 ## Project structure
