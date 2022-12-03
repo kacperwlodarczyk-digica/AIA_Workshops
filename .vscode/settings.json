@@ -1,8 +1,6 @@
 {
     "files.autoSave": "afterDelay",
     "python.analysis.typeCheckingMode": "basic",
-    "python.linting.pylintEnabled": false,
-    "python.linting.enabled": false,
     "python.formatting.provider": "black",
     "python.formatting.blackArgs": [
         "--line-length",

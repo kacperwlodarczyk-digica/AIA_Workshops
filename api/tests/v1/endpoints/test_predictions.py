@@ -10,7 +10,7 @@ from api.src.core.services.predictions_service import PredictionsService
 from api.tests.ml.test_classifier_model import HEALTHY_IMAGE_NAME
 
 
-def test_predict(app: FastAPI, client: TestClient, assets_path: Path):
+def test_predict_endpoint(app: FastAPI, client: TestClient, assets_path: Path):
     with open(assets_path / HEALTHY_IMAGE_NAME, "rb") as f:
         response = client.post(
             app.url_path_for("predict"), files={"image_file": (HEALTHY_IMAGE_NAME, f, "image/jpeg")}
@@ -19,7 +19,7 @@ def test_predict(app: FastAPI, client: TestClient, assets_path: Path):
     assert response.json()["label"].lower() == "healthy"
 
 
-def test_dummy_predict_with_override(app: FastAPI, client: TestClient, assets_path: Path):
+def test_dummy_predict_endpoint_with_override(app: FastAPI, client: TestClient, assets_path: Path):
     prediction_service_mock = mock.Mock(spec=PredictionsService)
     test_label = "TEST_LABEL"
     test_score = 0.91
