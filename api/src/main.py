@@ -15,7 +15,6 @@ settings = load_settings()
 app = get_application(
     project_name=settings.PROJECT_NAME,
     api_prefix=settings.API_VERSION_PREFIX,
-    cors_allowed_origins=settings.CORS_ALLOWED_ORIGINS,
 )
 
 

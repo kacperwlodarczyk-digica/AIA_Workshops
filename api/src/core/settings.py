@@ -9,9 +9,6 @@ class AppSettings(BaseSettings):
     API_VERSION_PREFIX: str = "/v1"
     DATA_LOCAL_DIR = Path(__file__).parents[3] / "data"
 
-    # For the Workshop purposes, we're allowing any origin to communicate with our API
-    CORS_ALLOWED_ORIGINS: list[str] = ["*"]
-
     # AWS
     REGION: str
     BUCKET_NAME: str
