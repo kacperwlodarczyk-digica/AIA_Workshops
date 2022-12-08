@@ -2,6 +2,7 @@ from pathlib import Path
 
 import tensorflow as tf
 import numpy as np
+import pytest
 
 from api.src.core.ml.classifier_model import ClassifierModel
 from api.src.core.schemas.predictions import Prediction
@@ -28,9 +29,11 @@ def test_preprocess_method(classifier_model: ClassifierModel, assets_path: Path)
 
 
 def test_predict_method(classifier_model: ClassifierModel, assets_path: Path):
-    classifier_model.load()
     image_preprocessed_np = np.load(assets_path / _HEALTHY_IMAGE_PREPROCESSED_NAME)
     image_preprocessed_tf: tf.Tensor = tf.convert_to_tensor(image_preprocessed_np)
+    with pytest.raises(Exception) as e:
+        output = classifier_model.predict(image_preprocessed_tf)
+    classifier_model.load()
     output = classifier_model.predict(image_preprocessed_tf)
 
     assert isinstance(output, tf.Tensor)
