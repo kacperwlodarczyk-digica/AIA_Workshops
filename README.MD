@@ -1,54 +1,77 @@
+## Run API
+```
+~/AIA_Workshops$ . ./activate_env.sh
+~/AIA_Workshops$ cd ./api
+~/AIA_Workshops/api$ ./start_api.sh
+```
+
 ## Project structure
 <b>Project directory tree</b>
 ```
 .
-├── app                                     # root directory of Python package
-│   ├── api                                 # root directory of REST API (Backend) package
-│   │   ├── __init__.py
-│   │   ├── main.py                         # entry point of the Backend APP
-│   │   ├── run_app.sh                      # script for running the App with default configuration
-│   │   └── src                            
-│   │       ├── core                        # core part of the API, with all the schemas and logic
-│   │       │   ├── app_container.py        # container that stores all the resources that are then injected to api.v1.endpoints package
-│   │       │   ├── common                  # common/shared code
-│   │       │   │   ├── exceptions.py       # internal(!TODO! check if not changed) exceptions
-│   │       │   │   └── __init__.py
-│   │       │   ├── __init__.py
-│   │       │   ├── ml_models
-│   │       │   │   ├── classifier.py       # service for keras model (business logic)
-│   │       │   │   └── __init__.py
-│   │       │   ├── schemas                 # endpoints/internall schemas (written most often in Pydantic)
-│   │       │   │   ├── __init__.py
-│   │       │   │   └── predictions.py
-│   │       │   ├── server.py               # server factory
-│   │       │   ├── services                # business logic
-│   │       │   │   ├── __init__.py
-│   │       │   │   └── predictions.py      
-│   │       │   └── settings.py             # app settings for configuring it during startup (Pydantic)
-│   │       ├── __init__.py
-│   │       └── v1                          # version v1 of the API router
-│   │           ├── endpoints               # endpoints/routers (each file contains separate router object)
-│   │           │   ├── healthcheck.py      # /healthcheck endpoint
-│   │           │   ├── __init__.py
-│   │           │   └── predictions.py      # /predictions endpoint
-│   │           ├── __init__.py
-│   │           └── router.py               # main router (contains all the lower-level routers from the endpoints directory)
-│   └── setup.py                            # setup file for building Python package
-├── data
-│   ├── class_names.json
-│   └── model_k_kren_final.h5               # data directory, with model and class names mapping dict
-├── activate_env.sh                         # activate Python environment (add python executable to PATGH, build editable Python Project, install requirements)
-└── requirements.txt                        # project dependencies (external packages)
+├── .env                                # ENV file with configuration variables
+├── __init__.py
+├── pytest.ini                          # Tests configuration file
+├── run_app.sh                          # Script for running API
+├── run_tests.sh                        # Script for running tests
+├── src
+│   ├── core                            # Business logic
+│   │   ├── managers                    # External managers
+│   │   │   ├── __init__.py
+│   │   │   └── s3_downloader.py
+│   │   ├── ml                          # Machine Learning models
+│   │   │   ├── classifier_files.py
+│   │   │   ├── classifier_model.py
+│   │   │   └── __init__.py
+│   │   ├── schemas                     # API schemas
+│   │   │   ├── __init__.py
+│   │   │   └── predictions.py
+│   │   ├── server.py                   # FastAPI server configuration
+│   │   ├── services                    # API services
+│   │   │   ├── __init__.py
+│   │   │   └── predictions_service.py
+│   │   ├── settings.py                 # Pydantic-based App configuration settings
+│   │   ├── app_container.py            # App container for managing dependencies (dependency injection)
+│   │   └── __init__.py
+│   ├── __init__.py
+│   ├── main.py                         # Entrypoint
+│   └── v1                              # API V1
+│       ├── endpoints
+│       │   ├── healthcheck.py
+│       │   ├── __init__.py
+│       │   └── predictions.py
+│       ├── __init__.py
+│       └── router.py
+└── tests
+    ├── assets
+    │   ├── healthy.jpg
+    │   └── healthy_preprocessed.npy
+    ├── conftest.py
+    ├── managers
+    │   ├── __init__.py
+    │   └── test_s3_downloader.py
+    ├── ml
+    │   ├── __init__.py
+    │   └── test_classifier_model.py
+    ├── schemas
+    │   ├── __init__.py
+    │   └── test_predictions.py
+    ├── services
+    │   ├── __init__.py
+    │   └── test_predictions_service.py
+    └── v1
+        └── test_predictions.py
 ```
 
 
 ### Example of layered architecture:
 
-- First layer: `api.v1.endpoints.services` 
-- Second layer: `api.src.core.services.predictions` 
-- Third layer: `api.src.core.ml_models.classifier`
+- Top layer: `api.v1.endpoints.predictions`
+- Second layer: `api.src.core.services.predictions_service` 
+- Third layer: `api.src.core.ml.classifier_model`
 
-Code is splitted and each layer is characterised by different level of abstraction, where first layer is the most abstract (check the logic for the file representing this layer in the example), and the last layer (example of classifier model) actually contains keras model and manage it (load/unload/make a prediction/pre&post-process data) -of course we're using DL library, but this is just another level that we're not aware of, apart from the interface that it provides.
+Code is splitted and each layer is characterised by different level of abstraction, where first layer is the most abstract (check the logic for the file representing this layer in the example), and the last layer (example of classifier model) actually contains keras model and manage it (load/unload/make a prediction/pre&post-process data) - of course we're using DL library, but this is just another level that we're not aware of, apart from the interface that it provides.
+Services are orchestrating lower-level classes by handling data from API requests and calling those lower-level classes to do the actual work. 
 
 ### Extending this project
 You may want to use this as a template. You can easily extend this app with:
@@ -61,15 +84,3 @@ You may want to use this as a template. You can easily extend this app with:
 - [Dependency injector for Python](https://python-dependency-injector.ets-labs.org/introduction/index.html) - framework implementing dependency injection principle
 - [Pydantic](https://pydantic-docs.helpmanual.io/) - data validation, settings management, type annotations
 - [Keras](https://keras.io/) - simple, high-level API for Tensorflow Deep Learning library
-
-
-
-
-
-
-<!-- Notatki -->
-
-TLJH default jupyter-lab:
-```
-sudo tljh-config set user_environment.default_app jupyterlab
-```

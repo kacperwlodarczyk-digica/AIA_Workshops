@@ -1,0 +1,15 @@
+{
+    "files.autoSave": "afterDelay",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length",
+        "119"
+    ],
+    "python.formatting.blackPath": ".venv/bin/black",
+    "editor.formatOnSave": true,
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingTypeStubs": "none"
+    },
+    "python.defaultInterpreterPath": ".venv/bin/python"
+}

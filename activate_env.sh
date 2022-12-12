@@ -5,7 +5,6 @@
 
 PYTHON_VERSION=python3.9
 PIP_VERSION=pip3.9
-PIP_VERBOSITY="-q"
 
 # Check if venv not exists
 if [ ! -e .venv/bin/activate ]; then
@@ -14,22 +13,20 @@ if [ ! -e .venv/bin/activate ]; then
     # Source newly created venv
     source .venv/bin/activate
     # Upgrade pip and tools for building a package
-    pip $PIP_VERBOSITY install --upgrade pip wheel setuptools
+    pip install --upgrade pip wheel setuptools
 
     # Install pre-commit
     # python -m pip install pre-commit
     # pre-commit install
 
     # Install editable package of AI Academy app
-    python -m pip install -e app
+    python -m pip install -e .
+    python -m mypy_boto3 > /dev/null 2>&1
 else
     # Source venv if exists
     source .venv/bin/activate
     echo "Activated virtual env"
     # Install editable package of AI Academy app
-    python -m pip install -e app
+    python -m pip install -e .
+    python -m mypy_boto3 > /dev/null 2>&1
 fi
-
-# Install requirements
-pip $PIP_VERBOSITY install -r requirements.txt
-python -m mypy_boto3
